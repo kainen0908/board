@@ -10,7 +10,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.15'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	// querydsl 추가
-	//id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'org.zerock'
@@ -42,8 +42,8 @@ dependencies {
 	//mariadb 추가
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.0'
 	//querydsl 추가
-	//implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-	//annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
 }
 
 test {
@@ -51,7 +51,7 @@ test {
 }
 
 // querydsl 세팅
-/*def querydslDir = "$buildDir/generated/querydsl"
+def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
 	jpa = true
@@ -68,4 +68,4 @@ configurations {
 
 compileQuerydsl {
 	options.annotationProcessorPath = configurations.querydsl
-}*/
+}
