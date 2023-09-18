@@ -34,7 +34,7 @@ public interface BoardService {
                 .regDate(board.getRegDate())
                 .modDate(board.getModDate())
                 .writerEmail(member.getEmail())
-                .writername(member.getName())
+                .writerName(member.getName())
                 .replyCount(replyCount.intValue())
                 .build();
         return boardDTO;
