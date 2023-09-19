@@ -80,4 +80,10 @@ public class BoardRepositoryTests {
     public void testSearch1() {
         boardRepository.search1();
     }
+
+    @Test
+    public void testSearchPage() {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+        Page<Object[]> result = boardRepository.searchPage("t","1",pageable);
+    }
 }
