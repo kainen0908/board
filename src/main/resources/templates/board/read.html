@@ -47,7 +47,6 @@
                 })
 
                 $(".replySave").click(function() {
-
                     var reply = {
                         bno: bno,
                         text: $('input[name="replyText"]').val(),
@@ -77,7 +76,6 @@
                     $("input[name='replyText']").val($(this).find('.card-title').html());
                     $("input[name='replyer']").val($(this).find('.card-subtitle').html());
                     $("input[name='rno']").val(rno);
-
                     $(".modal-footer .btn").hide();
                     $(".replyRemove, .replyModify, .replyClose").show();
                     modal.modal('show');
@@ -86,7 +84,7 @@
                 $(".replyRemove").on("click", function() {
                     var rno = $("input[name='rno']").val();
                     $.ajax({
-                        url: '/replies/' + rno,
+                        url: '/replies/',
                         method: 'delete',
                         success: function(result) {
                             console.log("result: " + result);
@@ -99,6 +97,30 @@
                     })
                 })
 
+                $(".replyModify").click(function(){
+                    var rno = $("input[name='rno]").val();
+                    var reply = {
+                        rno:rno,
+                        bno:bno,
+                        text: $('input[name="replyText"]').val(),
+                        replyer: $('input[name="replyer"]').val()
+                    }
+                    console.log(reply);
+                    $.ajax ({
+                        url: '/replies/' + rno,
+                        method: 'put',
+                        data: JSON.stringify(reply),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function(result) {
+                            console.log("RESULT: " + result);
+                            if(result === 'success') {
+                                alert("댓글이 수정되었습니다.");
+                                modal.modal('hide');
+                                loadJSONData();
+                            }
+                        }
+                    });
+                });
             });
         </script>
         <h1 class="mt-4">Board Read Page</h1>
@@ -128,14 +150,12 @@
             </div>
             <a th:href="@{/board/modify(bno=${dto.bno},page=${requestDTO.page},type=${requestDTO.type},keyword=${requestDTO.keyword})}"><button type="button" class="btn btn-primary">Modify</button> </a>
             <a th:href="@{/board/list(page=${requestDTO.page},type=${requestDTO.type},keyword=${requestDTO.keyword})}"><button type="button" class="btn btn-info">List</button> </a>
-
             <div>
                 <div class="mt-4">
                     <h5><span class="badge badge-info addReply">Add Reply</span></h5>
                     <h5><span class="badge badge-secondary replyCount">Reply Count [[${dto.replyCount}]]</span></h5>
                 </div>
                 <div class="list-group replyList">
-
                 </div>
             </div>
 
